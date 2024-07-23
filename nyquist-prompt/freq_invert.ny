@@ -1,0 +1,13 @@
+(defun invert-every-second-sample (sound)
+  (let* ((samples (snd-samples sound 100000000))
+         (len (length samples))
+         (inverted-samples (make-array len)))
+    (dotimes (i len)
+      (setf (aref inverted-samples i)
+            (if (oddp i)
+                (- (aref samples i))
+                (aref samples i))))
+    (snd-from-array 0 *sound-srate* inverted-samples)))
+
+(invert-every-second-sample (aref *track* 0))
+(invert-every-second-sample (aref *track* 1))
